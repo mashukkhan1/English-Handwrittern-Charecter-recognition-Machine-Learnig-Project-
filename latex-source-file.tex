@@ -1,0 +1,205 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{siunitx}
+
+
+\begin{document}
+
+\title{English Handwritten Characters Recognition Using Convolution Neural Network}
+
+\author{\IEEEauthorblockN{Mashuk Khan}
+\IEEEauthorblockA{{Student ID : 2018-1-60-162} \\
+Department of CSE\\
+East West Uniiversity \\
+Dhaka, Bangladesh\\
+2018-1-60-162@std.ewubd.edu}
+\and
+\IEEEauthorblockN{Noureen Alam Meem}
+\IEEEauthorblockA{{Student ID : 2018-1-60-053} \\
+Department of CSE\\
+East West Uniiversity \\
+Dhaka, Bangladesh\\
+2018-1-60-053@std.ewubd.edu}
+\and
+\IEEEauthorblockN{Fariha Fairuz}
+\IEEEauthorblockA{{Student ID : 2018-1-60-080} \\
+Department of CSE\\
+East West Uniiversity \\
+Dhaka, Bangladesh\\
+2018-1-60-080@std.ewubd.edu}
+
+}
+
+\maketitle
+
+\begin{abstract}
+The  paper will represent the best approach to obtain more than 90\% accuracy in the field of Handwritten Character Recognition (HCR). Although plenty of research has been done in this field, the maximum accuracy is yet to be achieved. In this paper, Convolutional Neural Network  and Tensorflow were used to recognize offline handwritten characters. For assigning the probabilities, Softmax Regression method is used as the value we will get is between 0 and 1 which will sum up to 1. The primary goal of this paper is to establish a  software that can provide a very high accuracy rate and takes minimal time to complete the procedure with lower space complexity.
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+Convolutional Neural Network, Handwritten Character Recognition, EMNIST dataset, Softmax, ReLU.
+\end{IEEEkeywords}
+
+\section{Introduction}
+In the past few years deep learning-based algorithms have been performing remarkably in the research in solving a wide range of machine learning problems. One of the most prominent and frequently used techniques is convolutional neural network (CNN). CNN is a kind of neural network that can retrieve attributes from multidimensional inputs, convert those into features for solving a problem within the range of computer vision, a field of AI that allows a computer to derive relevant information from digital images, videos or any other form of visual inputs \cite{Baldominos2019}. In this project we employed CNN for recognising English handwritten characters. The subsequent objective is to simulate the human trait of reading, recognizing into computers. Handwritten character recognition is one of the most compelling research in the field of pattern recognition and image processing \cite{Lu2019}. This evidently contributes to the field of automation. Character recognition is of two sorts, online and offline. Online character recognition requires the input data to be captured in real time using a special pen together with an electronic surface. As the pen is moved across the surface, the two- dimensional coordinates of points are manipulated as a function of time and are stored order-wise. \cite{Attigeri2018a}. The EMNIST dataset has been extensively used for these models. The EMNIST (Extended Modified National Institute of Standards and Technology) database is a sizable database of handwritten english letters which is comprehensively used for training image processing models. It is also used as a testing and training dataset in Machine Learning \cite{Baldominos2019}, \cite{Cohen2017}.
+
+\section{EMNIST}
+The NIST (National Institute of Standards and Technology) Special Database 19 [11] contains handwritten characters and digits accumulated from over 500 contributors. The dataset is a collection of binary scans of the collected handwriting samples. There is a noteworthy number of research tested over NIST and MNIST (Modified National Institute of Standards and Technology) and the tests were subjected to 1\% error rate. In 2017, Cohen et al. \cite{Cohen2017} established the Extended MNIST database (EMNIST). EMNIST incorporated handwritten digits and letters. The authors established that, “the dataset labeling can be called into question", alleging EMNIST as an uncomplicated and straightforward standard. A sample of EMNIST database is shown in Fig. 1.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.4]{image/eng.png}
+    \caption{EMNIST sample dataset}
+    \label{sample}
+\end{figure} \\
+The source for compiling EMNIST database was NIST Special Database 19 (NIST SD 19) , containing NIST’s complete training materials for handwritten document and character recognition. This contains over 800,000 characters which have been manually checked and labelled from almost 3700 writers. It was accessible from the mid 1990s. But, it's use remained very limited used due to the complications in obtaining and using it in modern computers. This was fixed in 2016 when the updated version of the database was published with a simpler format. The authors of EMNIST have intentionally made the database flexible with MNIST in terms of structure. Hence it can perform a similar processing. \cite{Baldominos2019}, \cite{Cohen2017}.
+
+\section{The Proposed Recognition Algorithm}
+In this study, tests were performed on the EMNIST 
+handwritten data set with CNN 
+Algorithm using CSV file, filtered image files and binary format of EMNIST balanced dataset as inputs. The accuracy rates of the algorithms in 
+all categories of inputs were 
+compared. Our HCR system has these following steps (in order) : Image Acquisition, Preprocessing, Augmentation, One Hot Encoding, Splitting Dataset, Training and Testing, Prediction. [Figure\ref{blk}].
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.6]{image/blk.jpg}
+    \caption{HCR block diagram}
+    \label{blk}
+\end{figure}\\
+\subsection{Image Acquisition}
+\subsubsection{CSV Input File}
+CSV input file was composed from images in EMNIST by\_class unbalanced dataset. The image files were taken as an array of inputs to generate the CSV file as an output.
+\subsubsection{Image Input Files}
+In image acquisition, the recognition system generate a 
+scanned image file as an input image. The image should have 
+a specific format such as .jpg, .jpeg, .png, etc. Scanner, digital camera or any other digital input devices are used for image file acquisition depending on the user interface \cite{Sahu2017}.  [Figure\ref{aa}].
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.6]{image/aaaa.png}
+    \caption{Sample imput file}
+    \label{aa}
+\end{figure}\\
+\subsubsection{EMNIST Balanced Dataset in binary/idx Format}
+This variant
+on the dataset merges certain classes that look quite similar in respective uppercase and lowercase format, creating a 47-class
+classification task. The merged classes are for the letters C, I, J, K, L, M, O, P, S, U, V, W, X, Y and Z \cite{Gutierrez}.
+\subsection{Preprocessing}
+All tests within the scope of this study were 
+performed on the Visual Studio Code (v1.60.0), which is an integrated development environment used in programming and development. A Python library called Scikit Learn and Tensorflow was used in the study. Tensorflow was mainly used for the CNN model training and testing. It offers the opportunity to effectively implement many 
+machine learning algorithms. It enables the rapid 
+training and testing of machine learning 
+algorithms with high level languages.
+\subsubsection{CSV Input File}
+Separate classes were generated for each characters. In the coding part, characters were labelled using string values. CSV file was reshaped into 28x28 pixels as two dimensional array. This two dimensional array was flattened and turned into single dimensional array of 784 indices.
+\subsubsection{Image Input Files}
+Input files were resized into 28x28 pixels. Initial depth of the files was 3 as they were considered as coloured image. The depth was converted to 1 to turn the coloured images into grayscale images. 
+\subsubsection{EMNIST Balanced Dataset in binary/idx Format}
+Binary format files were altered by flipping and rotating to evolve them into error-free inputs. \\
+We normalized the data dividing the pixel size by 255, the resulting number ranges from 0 to 1. This process is named as normalization. Normalization refers to re-scaling the original ranged real-valued numeric attributes within the 0 to 1 range. When the different features are on smaller scale, Machine Learning algorithms perform better and converge faster. Therefore, normalizing the data before training the Machine Learning model is very important. It makes the model training less sensitive to the scale of features.
+\subsection{Spliting Dataset}
+All the inputs were split into train sets and test sets. Each of the train set includes 80\% of the total files. Test sets include 20\% of the files.
+\subsection{Image Augmentation}
+Data augmentation is the technique of increasing the amount and diversity of data used for training a model. For reliable predictions, the ML algorithms often require a lot of training data, which is not always available. Therefore, the existing data is transformed in order to make a better generalized model. The most commonly used operations in data augmentation are-Scaling, Rotating, Zooming, Flipping, Cropping, Shearing, Changing the brightness level. While training a machine learning model, It acts as a regularizer and helps to prevent over-fitting. In our model, image augmentations were made such as enlarging, reducing the images rotating the images, adjusting height and width etc.
+\subsection{One Hot Encoding}
+The class values were passed as a parameter in one hot encoding function. One hot encoding is a process of converting categorical data variables into a form so that they can be provided to machine learning algorithms to do a better job in prediction. It is one of the most crucial parts of feature engineering for Machine Learning.  Depending on the implementation process, Some Machine Learning algorithms can work directly with categorical data. However, most require any numeric value as  input or output variables. With the help of one-hot, each categorical value is converted into a new categorical column and those columns are  assigned with a binary value of 1 or 0. Each integer value is represented as a binary vector.  The index value is marked with 1 and the rest of the values will be 0. By using one hot, a probability for the data can be easily determined. 
+\subsection{Model}
+The model includes two activation functions : ReLU and Softmax functions and some other layers.
+\subsubsection{Rectified Linear Unit (ReLU) Function}
+ReLU is the mostly used activation function in Neural Networks. It is simpler and more cost effective than tanh function and sigmoid function as it contains simple calculations. It has comparatively less shortcoming as an activation function.
+\subsubsection{Maxpooling}
+Max Pooling is a convolution process that calculates the maximum value in each patch of each feature map. That means, it informs the  Convolutional Neural Network that we will only carry forward the largest information available amplitude wise.
+\subsubsection{Softmax Function}
+The softmax function is used as an activation function to the very last layer of a neural network. The input values can be positive, negative, zero, or greater than one. However, the softmax function transforms them into values between 0 and 1 so that they can be interpreted as probabilities.
+\subsubsection{Convolution Layer}
+Convolutional layers are the layers where filters are applied to the original image, or to other feature maps in a deep CNN. This is where most of the user-specified parameters are in the network.\\
+All of these repeat themselves in a pattern as illustrated in Fig. 4
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.8]{image/model.jpg}
+    \caption{CNN model layers}
+    \label{model}
+\end{figure}
+%######################accuracy
+\subsection{Accuracy}
+\subsubsection{CSV Input File}
+CSV file had unbalanced number of data.
+[Figure\ref{csvdataa}].
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.25]{image/csvdata.png}
+    \caption{ }
+    \label{csvdataa}
+\end{figure}\\
+Training accuracy was 88.48\% and test accuracy was 95.64\% [Figure\ref{csvacc}].
+But it was unable to meet the required prediction accuracy.That is why we did not use image files for predicting.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.3]{image/csvacc.png}
+    \caption{Training and test accuracy for CSV file}
+    \label{csvacc}
+\end{figure}\\
+%########################img
+\subsubsection{Image Input Files}
+Training dataset for image files were balanced i.e., the classes had 2000 images each. [Figure\ref{imgdataa}].
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.4]{image/imgdata.jpg}
+    \caption{ }
+    \label{imgdataa}
+\end{figure}\\
+But the training accuracy was only 1.9\%. Test accuracy was 2\%.
+[Figure\ref{imgacc}].
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.3]{image/csvacc.png}
+    \caption{Training and test accuracy for Image files}
+    \label{imgacc}
+\end{figure}\\
+That is why we did not use image files for predicting.\\
+%########################binary
+\subsubsection{EMNIST Balanced Dataset in binary/idx Format}
+Training dataset for image files were balanced [Figure\ref{bindataa}].
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.4]{image/binarydata.jpg}
+    \caption{ }
+    \label{bindataa}
+\end{figure}\\
+But the training accuracy was 51.44\%. Test accuracy was 70.38\%.
+[Figure\ref{binacc}].
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.3]{image/binaryacc.png}
+    \caption{Training and test accuracy for Image files}
+    \label{binacc}
+\end{figure}\\
+We only used EMNIST Balanced Dataset in binary/idx Format for prediction as we obtained maximum percentage of accuracy which also met the requirement.
+%######################
+\subsection{Comparison Among Dataset Accuracies}
+The reason why we obtained different accuracies beacuse, (1)The number of letters in each classes were unbalanced in all of the datasets and (2) Image file didn't contain adequate amount of files for each characters and there were many corrupted files in those.
+%###########################
+\section{Conclusion}
+The handwritten character recognition system described in 
+this project will find promising applications in 
+handwritten name recognition, digitizing documents, document reading, 
+conversion of any handwritten document into 
+structural text form. These set of algorithms can be easily modified and upgraded according to future requirements.
+
+
+
+
+
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{library}
+
+\end{document}
